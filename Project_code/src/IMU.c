@@ -68,8 +68,8 @@ uint16_t IMU_readInit(uint8_t address,uint8_t CS){
     while(SPI_I2S_GetFlagStatus(SPI3, SPI_I2S_FLAG_RXNE) == RESET){ }
     //Clears the RX buffer
     Temp21 = SPI_ReceiveData8(SPI3);
-    //Starts the SPI clock to Receive from the IMU
     SPI_SendData8(SPI3, 0x00);
+    //Starts the SPI clock to Receive from the IMU
     //Checks if every thing has been send and Received
     while(SPI_I2S_GetFlagStatus(SPI3, SPI_I2S_FLAG_TXE) != SET) { }
     while(SPI_I2S_GetFlagStatus(SPI3, SPI_I2S_FLAG_RXNE) == RESET){ }
@@ -120,12 +120,15 @@ void IMU_xyz(struct IMU *IMU1,uint8_t SS){
     if(Gyro_Read_Select==(SS&0x01)){
         //Read the values for the Gyro
         IMU1->xGyro = (IMU_readInit(OUT_X_H_G,CS_AG))<<8;
+        //for(uint32_t i = 0; i<40000;i++);
         IMU1->xGyro |= (IMU_readInit(OUT_X_L_G,CS_AG));
-
+        //for(uint32_t i = 0; i<40000;i++);
         IMU1->yGyro = (IMU_readInit(OUT_Y_H_G,CS_AG))<<8;
+        //for(uint32_t i = 0; i<40000;i++);
         IMU1->yGyro |= (IMU_readInit(OUT_Y_L_G,CS_AG));
-
+        //for(uint32_t i = 0; i<40000;i++);
         IMU1->zGyro = (IMU_readInit(OUT_Z_H_G,CS_AG))<<8;
+        //for(uint32_t i = 0; i<40000;i++);
         IMU1->zGyro |= (IMU_readInit(OUT_Z_L_G,CS_AG));
     }
 
@@ -161,15 +164,16 @@ void IMU_print(struct IMU *IMU1,uint8_t SS){
 
     if(Gyro_Read_Select==(SS&0x01)){
     //printf("%c[%d;%d%c", ESC, 2,  2, 0x66);
-    printf("\nGyro: x=%d_y=%d_z=%d",IMU1->xGyro,IMU1->yGyro,IMU1->zGyro);
+    printf("%c[%d;%d%c", ESC, 2,  2, 0x66);
+    printf("Gyro: x=%d y=%d z=%d",IMU1->xGyro,IMU1->yGyro,IMU1->zGyro);
     }
     if(XL_Read_Select==(SS&0x02)){
     printf("%c[%d;%d%c", ESC, 4,  2, 0x66);
-    printf("XL: x=%d_y=%d_z=%d",IMU1->xAccel,IMU1->yAccel,IMU1->zAccel);
+    printf("XL: x=%d y=%d z=%d",IMU1->xAccel,IMU1->yAccel,IMU1->zAccel);
     }
     if(Mag_Read_Select==(SS&0x04)){
     printf("%c[%d;%d%c", ESC, 6,  2, 0x66);
-    printf("Mag: x=%d_y=%d_z=%d",IMU1->xMag,IMU1->yMag,IMU1->zMag);
+    printf("Mag: x=%d y=%d z=%d",IMU1->xMag,IMU1->yMag,IMU1->zMag);
     }
 }
 
@@ -275,10 +279,10 @@ void IMU_reset(){
     temp = IMU_readInit(0x0F,CS_AG);
     temp = IMU_readInit(0x0F,CS_AG);
     if(temp==0x68){
-        IMU_write(0x1E,0b00111000,CS_AG);
+        IMU_write(0x20,0b11100000,CS_AG);
         temp = IMU_readInit(0x0F,CS_AG);
         printf("n/Gyro power on");
-        //IMU_write(CTRL_REG5_XL,0b10111000,CS_AG);
+        IMU_write(0x10,0b11100000,CS_AG);
         printf("n/XL power on");
     }
     else{
@@ -288,7 +292,7 @@ void IMU_reset(){
     temp = 0;
     temp = IMU_readInit(WHO_AM_I,CS_M);
     if(temp==0x3D){
-        IMU_write(CTRL_REG1_M,0b01000000,CS_M);
+        //IMU_write(CTRL_REG1_M,0b01000000,CS_M);
         printf("n/Mag power on");
     }
     else{

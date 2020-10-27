@@ -28,7 +28,7 @@
 #include "SD_Driver.h"
 // Include ADC header file
 #include "ADC.h"
-#include "Gyro.h"
+//#include "Gyro.h"
 #include "IMU.h"
 
 ///////////////////////////////////////////////////////////////////////
@@ -285,7 +285,7 @@ setup();
 
 
 
-uart_getc();
+
 printf("%c[%d%c", ESC, 2, 0x4a);
 //LOAD CALFACT1 and CALFACT2 from FLASH <--- help chrissssssss
 
@@ -306,14 +306,14 @@ d |=f;
 
         //d = uart_getc();
         //uart_putc(d);
-        d = Gyro_Read_Select|XL_Read_Select;
+        d = XL_Read_Select;
 
         IMU_xyz(&IMU1,d);
         IMU_print(&IMU1,d);
 
 
 
-        for(uint32_t i = 0; i<40000;i++);
+        //for(uint32_t i = 0; i<40000;i++);
         //printf("%d",d);
         //StepperControle();
         //if(ting == 1){

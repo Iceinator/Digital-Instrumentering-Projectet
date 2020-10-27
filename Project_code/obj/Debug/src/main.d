@@ -12,4 +12,4 @@ obj\debug\src\main.o: src\main.c inc/stm32f30x_conf.h \
  SPL\inc/stm32f30x_tim.h SPL\inc/stm32f30x_usart.h \
  SPL\inc/stm32f30x_wwdg.h SPL\inc/stm32f30x_misc.h inc/30021_io.h \
  inc/Timer.h inc/30021_io.h inc/GPIO.h inc/lcd.h inc/flash.h \
- inc/Stepper.h inc/SD_Driver.h inc/ADC.h inc/Gyro.h inc/IMU.h
+ inc/Stepper.h inc/SD_Driver.h inc/ADC.h inc/IMU.h
