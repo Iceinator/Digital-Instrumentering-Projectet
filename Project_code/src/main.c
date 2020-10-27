@@ -29,6 +29,7 @@
 // Include ADC header file
 #include "ADC.h"
 #include "Gyro.h"
+#include "IMU.h"
 
 ///////////////////////////////////////////////////////////////////////
 // ------------------------Global Variables--------------------------//
@@ -128,8 +129,8 @@ void init_interrupt(void){
 
 void setup(void){
     init_usb_uart( 9600 ); // Initialize USB serial emulation at 9600 baud
-
-    init_spi_Gyro();
+    init_spi_IMU();
+    //init_spi_Gyro();
     // setup LCD
     //init_spi_lcd();
 
@@ -146,7 +147,8 @@ void setup(void){
     //initTimer();
     //setupStepper();
     //InitSDcard();
-    Gyro_reset();
+    //Gyro_reset();
+    IMU_reset();
     printf("\n\n Initialising all hardware components\n");
 
 }
@@ -263,9 +265,9 @@ int main(void)
 {
 //Run all setup task before going into the while loop.
 
-
+struct IMU IMU1;
 setup();
-struct Gyroxyz Gyro1;
+//CS_Start(CS_AG);
 
 //Run GPIO Setup
 //initJoystick();
@@ -278,7 +280,13 @@ struct Gyroxyz Gyro1;
 //printf("hej");
 
 
+
+
+
+
+
 uart_getc();
+printf("%c[%d%c", ESC, 2, 0x4a);
 //LOAD CALFACT1 and CALFACT2 from FLASH <--- help chrissssssss
 
 // Check correction factors - valid range or not
@@ -286,7 +294,11 @@ uart_getc();
 //uint8_t SampleCount = 0;
 
 //uint16_t ting = 1;
-uint8_t d = 0;
+uint16_t d = 0;
+uint16_t h = 3;
+uint16_t f = 5;
+d = h<<8;
+d |=f;
 //Flag for enabling usage of correction factor
 
  // Now we are ready to enter the While loop.
@@ -294,10 +306,15 @@ uint8_t d = 0;
 
         //d = uart_getc();
         //uart_putc(d);
-        Gyro_xyz(&Gyro1);
-        Gyro_print(&Gyro1);
-        for(uint32_t i = 0; i<4000000;i++);
-        printf("%d",d);
+        d = Gyro_Read_Select|XL_Read_Select;
+
+        IMU_xyz(&IMU1,d);
+        IMU_print(&IMU1,d);
+
+
+
+        for(uint32_t i = 0; i<40000;i++);
+        //printf("%d",d);
         //StepperControle();
         //if(ting == 1){
           //ADC_measure_PA(1);

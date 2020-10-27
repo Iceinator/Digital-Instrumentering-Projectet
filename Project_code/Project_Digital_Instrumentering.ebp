@@ -93,6 +93,8 @@
 		<Unit filename="cmsis\core_cmInstr.h" />
 		<Unit filename="inc\30021_io.h" />
 		<Unit filename="inc\ADC.h" />
+		<Unit filename="inc\Ansi.h" />
+		<Unit filename="inc\charset.h" />
 		<Unit filename="inc\flash.h" />
 		<Unit filename="inc\GPIO.h" />
 		<Unit filename="inc\Gyro.h" />
@@ -201,6 +203,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\ADC.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Ansi.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\flash.c">

@@ -1,6 +1,6 @@
 
 #include "Gyro.h"
-
+/*
 void Gyro_write(uint8_t address,uint8_t data){
     //Seting CS=0
     GPIO_WriteBit(GPIOC,GPIO_Pin_5,0);
@@ -186,3 +186,4 @@ void Gyro_reset(){
 
 
 }
+*/

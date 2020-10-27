@@ -77,9 +77,9 @@
 struct IMU {
 
     //x y z for the gyro rates
-    uint16_t xGyro;
-    uint16_t yGyro;
-    uint16_t zGyro;
+    int16_t xGyro;
+    int16_t yGyro;
+    int16_t zGyro;
 
     //x y z For the accelerometor
     uint16_t xAccel;
@@ -93,12 +93,16 @@ struct IMU {
 };
 
 
+/*************************
+    Functions
+*************************/
 
-void IMU_write(uint8_t address,uint8_t data);
+void IMU_write(uint8_t address,uint8_t data,uint8_t CS);
 uint16_t IMU_read(uint8_t address,uint8_t CS);
 void IMU_xyz(struct IMU *IMU1,uint8_t SS);
-void IMU_print(struct IMU *IMU1);
+void IMU_print(struct IMU *IMU1,uint8_t SS);
 void init_spi_IMU();
+void IMU_reset();
 uint16_t IMU_readInit(uint8_t address,uint8_t CS);
 void CS_Start(uint8_t CS);
 void CS_End(uint8_t CS);

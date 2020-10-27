@@ -19,6 +19,8 @@
 /*************************
     L3G4200D Registers
 *************************/
+/*
+
 #define WHO_AM_I 0x0F
 #define CTRL_REG1 0x20
 #define CTRL_REG2 0x21
@@ -46,7 +48,7 @@
 #define INT1_TSH_ZL 0x37
 #define INT1_DURATION 0x38
 #define ESC 0x1B
-
+*/
 // Structs
 struct Gyroxyz {
     uint16_t x;
