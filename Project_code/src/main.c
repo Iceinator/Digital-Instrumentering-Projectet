@@ -53,7 +53,13 @@ uint16_t ADC_CH2_RAW = 0;
 // Timer interrupt
 void TIM2_IRQHandler(void) {
 
-    PrintFlag = 1;
+
+    T_SDMU1.mus++;//Increment 10 micro secounds
+    if(T_SDMU1 >=100){
+            T_SD
+    }
+
+
     TIM_ClearITPendingBit(TIM2,TIM_IT_Update); // Clear interrupt bit
 }
 

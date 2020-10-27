@@ -19,7 +19,7 @@ void initTimer(){
     TIM_TimeBaseStructInit(&TIM_InitStructure);
     TIM_InitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_InitStructure.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_InitStructure.TIM_Period = 6300000; // Double check this
+    TIM_InitStructure.TIM_Period = 630; // Double check this
     TIM_InitStructure.TIM_Prescaler = 0;
     TIM_TimeBaseInit(TIM2,&TIM_InitStructure);
     // NVIC for timer
