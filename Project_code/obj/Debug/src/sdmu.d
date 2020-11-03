@@ -1,4 +1,4 @@
-obj\debug\src\main.o: src\main.c inc/stm32f30x_conf.h \
+obj\debug\src\sdmu.o: src\SDMU.c inc/stm32f30x_conf.h \
  SPL\inc/stm32f30x_adc.h inc/stm32f30x.h cmsis/core_cm4.h \
  cmsis/core_cmInstr.h cmsis/core_cmFunc.h cmsis/core_cm4_simd.h \
  inc/system_stm32f30x.h inc/stm32f30x_conf.h SPL\inc/stm32f30x_can.h \

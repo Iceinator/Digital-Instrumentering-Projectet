@@ -2,27 +2,17 @@
 //****************************** SDMU ****************************************//
 ////////////////////////////////////////////////////////////////////////////////
 
-##ifndef _SDMU_H_
+#ifndef _SDMU_H_
 #define _SDMU_H_
-
-/*
-* This file holds print functions
-* the STM32f302r8 Mikrocontroller.
-* This file is part of the course project for Digital Instrumentation - 30021
-* Author: Christoffer Frost
-*/
-
-
 
 ////////////Includes/////////////
 
-
 ////////////Defines////////////////
 
-
-
 ////////////Functions//////////////
+void EXTI_INIT(void);
+void GPIO_INIT_SDMU(void);
+void TIM2_INIT_SDMU(void);
+void TIM16_INIT_SDMU(void);
 
-
-
-#endif /* _30021_IO_H_ */
+#endif
