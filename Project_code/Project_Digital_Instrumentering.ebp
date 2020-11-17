@@ -101,11 +101,13 @@
 		<Unit filename="inc\IMU.h" />
 		<Unit filename="inc\lcd.h" />
 		<Unit filename="inc\PWM.h" />
+		<Unit filename="inc\RangeFinder.h" />
 		<Unit filename="inc\SD_Driver.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="inc\SD_Driver.h" />
 		<Unit filename="inc\SDMU.h" />
+		<Unit filename="inc\Servo.h" />
 		<Unit filename="inc\Stepper.h" />
 		<Unit filename="inc\stm32f30x.h" />
 		<Unit filename="inc\stm32f30x_conf.h" />
@@ -230,10 +232,16 @@
 		<Unit filename="src\PWM.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\RangeFinder.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\SD_Driver.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\SDMU.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Servo.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\startup_stm32f30x.S">
@@ -253,7 +261,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger>
-				<target_debugging_settings target="Debug" active_interface="OpenOCD">
+				<target_debugging_settings target="Release" active_interface="OpenOCD">
 					<debug_interface interface_id="OpenOCD" ip_address="localhost" ip_port="3333" path="C:\Debugger_openocd-0.10.0\bin-x64" executable="openocd.exe" description="" dont_start_server="false" backoff_time="100" options="0" reg_filter="0" active_family="All" gdb_before_conn="" gdb_after_conn="">
 						<family_options family_id="All">
 							<option opt_id="ID_BOARD_CH" opt_value="" />
@@ -266,7 +274,6 @@
 							<option opt_id="ID_SEMIHOST_CHECK" opt_value="0" />
 							<option opt_id="ID_ADD_COMMANDS" opt_value="" />
 							<option opt_id="ID_ADD_CMNDS" opt_value="" />
-							<option opt_id="ID_FLASH_DOWNLOAD" opt_value="1" />
 						</family_options>
 					</debug_interface>
 					<debug_interface interface_id="ST-link" ip_address="" ip_port="" path="" executable="" description="" dont_start_server="false" backoff_time="" options="0" reg_filter="0" active_family="" gdb_before_conn="" gdb_after_conn="">
@@ -285,7 +292,7 @@
 						</family_options>
 					</debug_interface>
 				</target_debugging_settings>
-				<target_debugging_settings target="Release" active_interface="OpenOCD">
+				<target_debugging_settings target="Debug" active_interface="OpenOCD">
 					<debug_interface interface_id="OpenOCD" ip_address="localhost" ip_port="3333" path="C:\Debugger_openocd-0.10.0\bin-x64" executable="openocd.exe" description="" dont_start_server="false" backoff_time="100" options="0" reg_filter="0" active_family="All" gdb_before_conn="" gdb_after_conn="">
 						<family_options family_id="All">
 							<option opt_id="ID_BOARD_CH" opt_value="" />
@@ -298,6 +305,7 @@
 							<option opt_id="ID_SEMIHOST_CHECK" opt_value="0" />
 							<option opt_id="ID_ADD_COMMANDS" opt_value="" />
 							<option opt_id="ID_ADD_CMNDS" opt_value="" />
+							<option opt_id="ID_FLASH_DOWNLOAD" opt_value="1" />
 						</family_options>
 					</debug_interface>
 					<debug_interface interface_id="ST-link" ip_address="" ip_port="" path="" executable="" description="" dont_start_server="false" backoff_time="" options="0" reg_filter="0" active_family="" gdb_before_conn="" gdb_after_conn="">

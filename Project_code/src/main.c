@@ -2,68 +2,52 @@
 #include "30021_io.h"       // Input/output library for this course
 #include "SDMU.h"           //Init code for timers, GPIO and EXTI
 
+#include "Servo.h"
+#include "RangeFinder.h"
 ///////////////////////////////////////////////////////////////////////
 // ------------------------Global Variables--------------------------//
 ///////////////////////////////////////////////////////////////////////
-volatile uint16_t ticks = 0;
-volatile uint8_t Calc_Pulse_Flag = 0;
+
 
 ///////////////////////////////////////////////////////////////////////
 // -------------------------- functions ----------------------------//
 ///////////////////////////////////////////////////////////////////////
-void EXTI9_5_IRQHandler(void)
+void EXTI9_5_IRQnHandler(void)
 {
-    uint8_t PA6_LEVEL = GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_6);
-
-    if(PA6_LEVEL == 1)  //Rising Edge - Echo went HIGH
-    {
-        TIM_Cmd(TIM16, ENABLE); //Start counting ECHO pulse width
-    }
-    else                //Falling Edge - Echo went LOW
-    {
-        TIM_Cmd(TIM16, DISABLE); //Stop counting ECHO pulse width
-        Calc_Pulse_Flag = 1;
-        TIM_SetCounter(TIM16, 0xFFFFFFFF);
-    }
-    //Clear interrupt pending bit - prevents re-firing
-    EXTI_ClearITPendingBit(EXTI_Line6);
-    //EXTI_ClearFlag(EXTI_Line6); //Does the same as above
+    printf("Joystick down interrupt called! \n");  // SET Calibration Flag - Checked by main
+    //RF1.DATA = RF_measure_Read();
+    EXTI_ClearITPendingBit(EXTI_Line6);  //Clear the interrupt pending bit
 }
 
-void TIM1_UP_TIM16_IRQHandler(void)
-{
-    ticks++;
-    TIM_ClearITPendingBit(TIM16, TIM_IT_CC1) ;
-}
 
 void setup(void)
 {
     init_usb_uart( 9600 ); // Initialize USB serial emulation at 9600 baud
+    init_spi_RF();
+    //init_interrupt2();
+    //GPIO_INIT_Servo();
+    //TIM15_INIT_Servo();
     printf("\n\n Initializing all hardware components\n");
 }
 
 int main(void)
 {
-    float       Dist = 0;
-    uint16_t    PulseWidth = 0;
     setup();
-    GPIO_INIT_SDMU();
-    EXTI_INIT();
-    TIM16_INIT_SDMU();
-    TIM2_INIT_SDMU();
+    uint32_t afstand = 0;
+    RF_measure_Write();
     while(1)
     {
-        if(Calc_Pulse_Flag == 1)
-        {
-            PulseWidth = ticks * 15;    //TIM16 CC occurs with 15uS period
-            Dist = PulseWidth / 58.0;   //Calculating distance in cm, as given in datasheets
-            printf("\n Pulse Width: %u [us] --> %f [cm]", PulseWidth, Dist);
-            Calc_Pulse_Flag = 0;
-            ticks = 0;
-        }
-        else
-        {
-            //Do nothing
-        }
+    //Posistion_Select(90,90);
+    RDY_Check();
+    printf("shafha");
+    RF_measure_Read();
+    RF_measure_Write();
+    //RF_measure_Read();
+    //afstand = RF1.DATA;
+    //printf("\n\n DATAred\n");
+    //Posistion_Select(180,180);
+    //for(uint32_t i=1;i=100000;i++);
+    //Posistion_Select(0,0);
     }
-}
+    }
+
