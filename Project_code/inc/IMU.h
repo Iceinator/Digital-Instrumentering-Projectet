@@ -1,11 +1,28 @@
+////////////////////////////////////////////////////////////////////////////////
+//****************************** IMU ****************************************//
+////////////////////////////////////////////////////////////////////////////////
+
 
 #ifndef _IMU_H_
 #define _IMU_H_
 
-/* Includes ------------------------------------------------------------------*/
+
+/*////////////pins//////////////////
+PC10    -   SCLK
+PC12    -   MOSI
+PC11    -   MISO
+PC6     -   CSAG
+PC5     -   CSM
+*/
+
+
+////////////Includes///////////////
 #include "stm32f30x_conf.h"
 #include <stdio.h>
 
+
+
+////////////Defines////////////////
 /*************************
     L3G4200D Registers for the Accelerometer and Gyro
 *************************/
@@ -73,7 +90,7 @@
 
 #define ESC 0x1B
 
-// Structs
+/////////////////// Structs/////////////////////
 struct IMU {
 
     //x y z for the gyro rates
@@ -82,21 +99,18 @@ struct IMU {
     int16_t zGyro;
 
     //x y z For the accelerometor
-    uint16_t xAccel;
-    uint16_t yAccel;
-    uint16_t zAccel;
+    uint32_t xAccel;
+    uint32_t yAccel;
+    uint32_t zAccel;
 
     //x y z for the megnet
-    uint16_t xMag;
-    uint16_t yMag;
-    uint16_t zMag;
+    uint32_t xMag;
+    uint32_t yMag;
+    uint32_t zMag;
 };
 
 
-/*************************
-    Functions
-*************************/
-
+/////////////Functions//////////////
 void IMU_write(uint8_t address,uint8_t data,uint8_t CS);
 uint16_t IMU_read(uint8_t address,uint8_t CS);
 void IMU_xyz(struct IMU *IMU1,uint8_t SS);

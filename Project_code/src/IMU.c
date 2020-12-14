@@ -298,6 +298,7 @@ void IMU_reset(){
     else{
             printf("No connection to MAG");
     }
-
-
 }
+
+
+

@@ -42,11 +42,11 @@ void InitSDcard(){
     USART_InitStructAll.USART_StopBits = 1;
     USART_InitStructAll.USART_Parity= USART_Parity_No;
 
-    USART_InitStructAll.USART_Mode = USART_Mode_Tx;
-    USART_InitStructAll.USART_Mode = USART_Mode_Rx;
+    USART_InitStructAll.USART_Mode = USART_Mode_Tx|USART_Mode_Rx;
+
 
     USART_InitStructAll.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-    USART_Init(GPIOA,&USART_InitStructAll);
+    USART_Init(USART1,&USART_InitStructAll);
 
 
     //Init of the clocks
@@ -74,6 +74,10 @@ uint8_t uart_SD_read() {
 
     return c;
 }
+
+
+
+
 /*
 uint8_t uart_Putty_SD_write() {
     while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) == RESET){};

@@ -1,53 +1,50 @@
 #include "stm32f30x_conf.h" // STM32 config
 #include "30021_io.h"       // Input/output library for this course
-#include "SDMU.h"           //Init code for timers, GPIO and EXTI
-
+                            //Init code for timers, GPIO and EXTI
 #include "Servo.h"
-#include "RangeFinder.h"
+#include "ScanOp.h"
+#include "IMU.h"
+#include "SD_Driver.h"
+#include "Timer.h"
+
+
 ///////////////////////////////////////////////////////////////////////
 // ------------------------Global Variables--------------------------//
 ///////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////
 // -------------------------- functions ----------------------------//
 ///////////////////////////////////////////////////////////////////////
-void EXTI9_5_IRQnHandler(void)
-{
-    printf("Joystick down interrupt called! \n");  // SET Calibration Flag - Checked by main
-    //RF1.DATA = RF_measure_Read();
-    EXTI_ClearITPendingBit(EXTI_Line6);  //Clear the interrupt pending bit
-}
-
 
 void setup(void)
 {
     init_usb_uart( 9600 ); // Initialize USB serial emulation at 9600 baud
-    init_spi_RF();
-    //init_interrupt2();
-    //GPIO_INIT_Servo();
-    //TIM15_INIT_Servo();
+    InitSDcard();
+    //printf("\n\n Initializing all hardware components\n");
+    initTimer();
+    GPIO_INIT_Servo();
+    TIM15_INIT_Servo();
+    init_spi_IMU();
+    IMU_reset();
+//    TIM17_INIT_Servo();
     printf("\n\n Initializing all hardware components\n");
 }
 
 int main(void)
 {
     setup();
-    uint32_t afstand = 0;
-    RF_measure_Write();
+    struct IMU IMU1;
+    struct DATA DATA1;
+    uint32_t jf = 6;
+    jf = t1.mus;
+
+
+    run_Scan(&IMU1,&DATA1);
+
     while(1)
     {
-    //Posistion_Select(90,90);
-    RDY_Check();
-    printf("shafha");
-    RF_measure_Read();
-    RF_measure_Write();
-    //RF_measure_Read();
-    //afstand = RF1.DATA;
-    //printf("\n\n DATAred\n");
-    //Posistion_Select(180,180);
-    //for(uint32_t i=1;i=100000;i++);
-    //Posistion_Select(0,0);
+    IMU_xyz(&IMU1,Gyro_Read_Select);
+    IMU_print(&IMU1,Gyro_Read_Select);
     }
-    }
+}
 

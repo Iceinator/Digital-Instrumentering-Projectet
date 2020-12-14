@@ -12,12 +12,15 @@
 * Author: Christoffer Frost
 */
 
-
-
+/*////////////pins//////////////////
+PA7 - PWM for horizontal movement
+PB14- PWM for vertical movement
+*/
 ////////////Includes///////////////
 
 #include "stm32f30x_conf.h" // STM32 config
 #include "30021_io.h"
+
 ////////////Defines////////////////
 
 
@@ -26,7 +29,7 @@
 void Posistion_Select(uint8_t xDeg, uint8_t yDeg);
 void TIM15_INIT_Servo(void);
 void GPIO_INIT_Servo(void);
-
+void TIM17_INIT_Servo(void);
 
 #endif /* _SERVO_IO_H_ */
 

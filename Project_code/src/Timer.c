@@ -13,13 +13,40 @@
 #include "Timer.h"
 extern uint8_t joyStickStateLocal;
 //Timer set to 100Hz at highest priority
+void initTimer_TIM3(){
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);
+ TIM_TimeBaseInitTypeDef TIM_InitStructure;
+ TIM_TimeBaseStructInit(&TIM_InitStructure);
+ TIM_InitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+ TIM_InitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ TIM_InitStructure.TIM_Period = 6138;
+ TIM_InitStructure.TIM_Prescaler = 100;
+ TIM_TimeBaseInit(TIM3,&TIM_InitStructure);
+ // NVIC for timer
+ NVIC_InitTypeDef NVIC_InitStructure;
+ NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
+ NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+ NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+ NVIC_Init(&NVIC_InitStructure);
+ TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE);
+ TIM_Cmd(TIM3,ENABLE);
+}
+/*
+void TIM3_IRQnHandler(void) {
+    time1.mus +=10;
+
+    TIM_ClearITPendingBit(TIM3,TIM_IT_Update);
+}
+*/
+
 void initTimer(){
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
     TIM_TimeBaseInitTypeDef TIM_InitStructure;
     TIM_TimeBaseStructInit(&TIM_InitStructure);
     TIM_InitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_InitStructure.TIM_CounterMode = TIM_CounterMode_Up;
-    TIM_InitStructure.TIM_Period = 630; // Double check this
+    TIM_InitStructure.TIM_Period = 63; // Double check this
     TIM_InitStructure.TIM_Prescaler = 0;
     TIM_TimeBaseInit(TIM2,&TIM_InitStructure);
     // NVIC for timer
@@ -36,14 +63,27 @@ void initTimer(){
 
 }
 /*
-void TIM2_IRQHandler(void) {
- TIM_ClearITPendingBit(TIM2, TIM_IT_CC1);
+void initTimer(){
+     RCC->APB1ENR |= RCC_APB1Periph_TIM2;// Enable clock line to timer 2;
+     TIM2->CR1 |= 0x0001;// Configure timer 2
+     TIM2->ARR = 639999; // Set reload value
+     TIM2->PSC = 0;// Set prescale value
 
- ICValue1 = TIM_GetCapture1(TIM2); // Period
- ICValue2 = TIM_GetCapture2(TIM2); // Duty/Width
- ICValid = 1;
+
+      TIM2->DIER |= 0x0001; // Enable timer 2 interrupts
+      NVIC_SetPriority(TIM2_IRQn, 1); // Set interrupt priority
+      NVIC_EnableIRQ(TIM2_IRQn); // Enable interrupt
+
 }
 */
+void TIM2_IRQHandler(void) {
+    t1.mus += 10;
+ //ICValue1 = TIM_GetCapture1(TIM2); // Period
+ //ICValue2 = TIM_GetCapture2(TIM2); // Duty/Width
+ //ICValid = 1;
+  TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+}
+
 // - Uncomment old Timer IRQ for the stop watch.
 
 
@@ -82,7 +122,7 @@ void timer16_clock_init(){
     TIM_CtrlPWMOutputs(TIM16, ENABLE);
 
 }
-
+/*
  void initstopwatch(){
     time1.hs = 0;
     time1.s = 0;
@@ -96,7 +136,7 @@ void PrintWatch(){
         printf(":%d",time1.s);
         printf(":%d",time1.hs);
 }
-
+*/
 void PrintStopwatch(uint8_t joyStickStateLocal){
 
     if(joyStickStateLocal == 16){
